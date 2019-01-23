@@ -11,3 +11,7 @@ Second Commit : Includes toolbar ( + , ...)
  ... group not implemented but has 2 items :
   1.My profile
   2.Log out
+
+
+Third Commit : Brush Size Implemented 
+     Fixed the clear logic so you can undo even if you clear accidentally.
