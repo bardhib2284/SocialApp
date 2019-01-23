@@ -1,8 +1,12 @@
 package com.tahirietrit.socialapp;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -11,12 +15,11 @@ import android.widget.Toast;
 import com.tahirietrit.socialapp.api.ApiService;
 import com.tahirietrit.socialapp.api.Servicefactory;
 import com.tahirietrit.socialapp.callbacks.AdapterCallbacks;
-import com.tahirietrit.socialapp.model.LoginResponse;
-import com.tahirietrit.socialapp.model.User;
 import com.tahirietrit.socialapp.model.feed.FeedResponse;
 import com.tahirietrit.socialapp.model.feed.Post;
 import com.tahirietrit.socialapp.prefs.AppPreferences;
 import com.tahirietrit.socialapp.ui.DetailActvity;
+import com.tahirietrit.socialapp.ui.ImageActivity;
 
 import java.util.ArrayList;
 
@@ -38,6 +41,37 @@ public class MainActivity extends AppCompatActivity implements AdapterCallbacks 
         adapter = new FeedAdapter(getLayoutInflater(), this);
         listView.setAdapter(adapter);
         getFeed();
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Post Feed");
+        setSupportActionBar(toolbar);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch(item.getItemId()){
+            case R.id.menuUpload:
+                Intent intent = new Intent(this, ImageActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.menuProfile:
+                Toast.makeText(this, "You clicked profile", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.menuLogout:
+                Toast.makeText(this, "You clicked logout", Toast.LENGTH_SHORT).show();
+                break;
+
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu, menu);
+        return true;
     }
 
     private void getFeed() {

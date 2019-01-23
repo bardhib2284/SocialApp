@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/savePicture"
+        app:showAsAction="always"
+        android:icon="@mipmap/baseline_cloud_upload_black_18dp"
+        android:title="Save"/>
+
+    <item
+        android:id="@+id/clear"
+        app:showAsAction="always"
+        android:icon="@mipmap/baseline_clear_black_18dp"
+        android:title="Clear"/>
+
+    <item
+        android:id="@+id/undoPath"
+        app:showAsAction="always"
+        android:icon="@mipmap/baseline_undo_black_18dp"
+        android:title="Undo"/>
+
+    <item
+        android:id="@+id/redoPath"
+        app:showAsAction="always"
+        android:icon="@mipmap/baseline_redo_black_18dp"
+        android:title="Undo"/>
+
+    <item
+        android:id="@+id/changeColor"
+        app:showAsAction="always"
+        android:icon="@mipmap/baseline_color_lens_black_18dp"
+        android:title="Color"/>
+
+    <item
+        android:id="@+id/brushSize"
+        android:title="Brush Size"/>
+
+    <item
+        android:id="@+id/normal"
+        android:title="Normal"
+        android:icon="@mipmap/baseline_undo_black_18dp" />
+
+    <item
+        android:id="@+id/emboss"
+        android:title="Emboss"/>
+
+    <item
+        android:id="@+id/blur"
+        android:title="Blur"/>
+
+</menu>
