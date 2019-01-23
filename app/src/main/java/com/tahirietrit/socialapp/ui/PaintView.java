@@ -34,6 +34,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.tahirietrit.socialapp.BR;
 import com.tahirietrit.socialapp.SavePhotoService;
 import com.tahirietrit.socialapp.model.FingerPath;
 
@@ -46,7 +47,7 @@ import java.util.Random;
 
 public class PaintView extends View {
 
-    public static  int BRUSH_SIZE = 10;
+    public int BRUSH_SIZE = 10;
     public static final int DEFAULT_COLOR = Color.RED;
     public static final int DEFAULT_BG_COLOR = Color.WHITE;
     private static final float TOUCH_TOLERANCE = 4;
@@ -72,6 +73,7 @@ public class PaintView extends View {
         super(ctx);
     }
 
+    private boolean cleared;
     public PaintView(Context ctx, AttributeSet attrs)
     {
         super(ctx,attrs);
@@ -100,7 +102,6 @@ public class PaintView extends View {
 
         currentColor = DEFAULT_COLOR;
         strokeWidth = BRUSH_SIZE;
-
     }
 
     public void Normal()
@@ -123,10 +124,18 @@ public class PaintView extends View {
 
     public void Clear()
     {
+        System.out.println("Clearing");
         backgroundColor = DEFAULT_BG_COLOR;
+        System.out.println("Current paths size : " + paths.size());
+        System.out.println("Current editedPaths size : " + editedPaths.size());
+        editedPaths = new ArrayList<>(paths);
+        System.out.println("editedPaths size : " + editedPaths.size());
         paths.clear();
+        System.out.println("After clearing paths size : " + paths.size());
+        draw(mCanvas);
         Normal();
         invalidate();
+        cleared = true;
     }
 
     @Override
@@ -155,6 +164,7 @@ public class PaintView extends View {
     private void touchStart(float x, float y)
     {
         mPath = new Path();
+        System.out.println(strokeWidth + " current brush size ");
         FingerPath fp = new FingerPath(currentColor,emboss,blur,strokeWidth,mPath);
         paths.add(fp);
 
@@ -281,6 +291,16 @@ public class PaintView extends View {
     {
         if(!(paths.size() > 0))
         {
+            if(editedPaths.size() >= 1 && cleared)
+            {
+                paths = new ArrayList<>(editedPaths);
+                draw(mCanvas);
+                Normal();
+                invalidate();
+                editedPaths.clear();
+                cleared = false;
+                return;
+            }
             Toast.makeText(getContext().getApplicationContext(),"No Steps To Undo",Toast.LENGTH_SHORT).show();
             return;
         }
@@ -296,6 +316,7 @@ public class PaintView extends View {
 
     public void Redo()
     {
+
         if (editedPaths.size() >= 1)
         {
             System.out.println("Paths size before redo " + paths.size());
@@ -308,5 +329,11 @@ public class PaintView extends View {
             Toast.makeText(getContext().getApplicationContext(),"Redo Successfully 1 step behind",Toast.LENGTH_SHORT).show();
         }
         else  Toast.makeText(getContext().getApplicationContext(),"No Steps To Redo",Toast.LENGTH_SHORT).show();
+    }
+
+    public void setBRUSH_SIZE(int brush_size)
+    {
+        BRUSH_SIZE = brush_size;
+        strokeWidth = BRUSH_SIZE;
     }
 }

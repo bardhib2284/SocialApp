@@ -20,11 +20,12 @@ import android.support.v7.app.AppCompatActivity;
 import com.tahirietrit.socialapp.R;
 import com.tahirietrit.socialapp.SavePhotoService;
 import com.tahirietrit.socialapp.dialogs.ColorPickerDialog;
+import com.tahirietrit.socialapp.dialogs.NumberPickerDialog;
 
 public class ImageActivity extends AppCompatActivity {
 
     public PaintView paintView;
-
+    public NumberPickerDialog numberPickerDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +38,7 @@ public class ImageActivity extends AppCompatActivity {
         toolbar.setTitle("Edit Picture");
         setSupportActionBar(toolbar);
         toolbar.setOverflowIcon(ContextCompat.getDrawable(getApplicationContext(),R.mipmap.baseline_edit_black_18dp));
-
+        numberPickerDialog = new NumberPickerDialog();
     }
 
     @Override
@@ -73,6 +74,9 @@ public class ImageActivity extends AppCompatActivity {
                 return true;
             case R.id.clear:
                 paintView.Clear();
+                return true;
+            case R.id.brushSize:
+                numberPickerDialog.showDialog(this,1,50,paintView.BRUSH_SIZE,paintView);
                 return true;
         }
         return super.onOptionsItemSelected(item);
